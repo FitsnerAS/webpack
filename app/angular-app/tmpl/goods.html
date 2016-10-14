@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-sm-4 col-lg-4 col-md-4" 
+         ng-repeat="item in goods|limitTo:postsPerPage">
+        <div class="thumbnail">
+            <img src="//img1.wbstatic.net/c246x328/new/{{item.cod1S|limitTo:3}}0000/{{item.cod1S}}-1.jpg" 
+                 ng-if="item.cod1S" alt="">
+            <img src="http://i1.wp.com/qnimate.com/wp-content/uploads/2014/03/images2.jpg?fit=679%2C9999"
+                 ng-if="!item.cod1S" alt="">
+            <div class="caption">
+                <h4 class="pull-right">${{item.price|limitTo:2}}</h4>
+                <h4><a href="">{{item.name}}</a>
+                </h4>
+                <p>Brand: {{item.brand}}</p>
+                <p>Color: {{item.color}}</p>
+                <span class="glyphicons glyphicons-edit shape"></span>
+            </div>
+            <div class="ratings">
+                <p class="pull-right">{{item.commentsCount}} reviews</p>
+                <p> 
+                    <i class="fa fa-pencil edit" aria-hidden="true"
+                       ng-click="editModal(item)">
+                    </i>
+                    <span class="glyphicon glyphicon-star"
+                          ng-show="item.mark >= 0"></span>
+                    <span class="glyphicon glyphicon-star"
+                          ng-show="item.mark >= 1"></span>
+                    <span class="glyphicon glyphicon-star"
+                          ng-show="item.mark >= 2"></span>
+                    <span class="glyphicon glyphicon-star"
+                          ng-show="item.mark >= 3"></span>
+                    <span class="glyphicon glyphicon-star"
+                          ng-show="item.mark >= 4"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <button type="button" class="btn btn-warning btn-block " 
+                ng-click="addPost()">
+            Add post
+        </button>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-block btn-info position"
+                    ng-click="loadMore()" 
+                    ng-show="postsPerPage <= goods.length">
+                Load more...
+            </button>
+        </div>
+    </div>
+</div>    

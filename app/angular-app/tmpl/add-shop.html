@@ -1,0 +1,44 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add post!</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <form class="form-horizontal indents-form" name="myForm">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Link</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" 
+                           ng-model="newShop.link" placeholder="Name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                    <textarea type="text" class="form-control"
+                              ng-model="newShop.description" 
+                              placeholder="Brand" required>
+                    </textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Location</label>
+                <div class="col-sm-10">
+                    <ng-map id="we" center="[53.894223,27.555085]"
+                            on-click="addMarker()" zoom="9">
+                    </ng-map>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-disabled="myForm.$invalid"
+            disabled type="button" 
+            ng-click="AddNewShop(newShop)">
+        OK
+    </button>
+    <button class="btn btn-warning" type="button" ng-click="dismiss()">
+        Cancel
+    </button>
+</div>

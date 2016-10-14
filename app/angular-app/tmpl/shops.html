@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Shop Name</p>
+            <div class="list-group" dnd-list="shops">
+                <a ui-sref="app.shops.goods({id:shop.id})"
+                   class="list-group-item" 
+                   dnd-draggable="shop"
+                   dnd-moved="shops.splice($index, 1)"
+                   dnd-effect-allowed="move"
+                   dnd-selected="models.selected = shop"
+                   ng-class="{'selected': models.selected === shop}"
+                   ng-repeat="shop in shops
+                               |startFrom:(pagination.currentPage - 1)
+                               * pagination.itemPerPage
+                               |limitTo:pagination.itemPerPage
+                               track by shop.id">
+                    <span class="pull-left">{{$index + 1}}) </span>
+                    <p>{{shop.description}}</p>
+                    <i class="fa fa-pencil edit pull-left" aria-hidden="true" 
+                       ng-click="editShopeModal(shop)">
+                    </i>
+                    <p class="text-info ">{{shop.link}}</p>
+                </a>
+                <button class="btn btn-block btn-danger"
+                        ng-click="addShop()">
+                    Add shop
+                </button>
+                <ul uib-pagination total-items="pagination.totalItems"
+                    ng-model="pagination.currentPage"
+                    class="pagination-sm" boundary-link-numbers="true">
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row carousel-holder">
+                <div class="col-md-12">
+                    <ng-map id="all" center="[53.899345, 27.564817]" zoom="10">
+                        <marker position="[{{shop.lat}},{{shop.long}}]" 
+                                title="{{shop.link}}"
+                                ng-repeat="shop in shops">
+                        </marker>
+                    </ng-map>
+                </div>
+            </div>
+            <div ui-view></div>
+        </div>
+    </div>
+</div>

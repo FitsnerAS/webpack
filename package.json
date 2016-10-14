@@ -1,0 +1,33 @@
+{
+  "name": "shopsCat",
+  "private": true,
+  "version": "0.0.0",
+  "main": "app/index.js",
+  "repository": "https://github.com/FitsnerAS/shopsCat",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "scripts": {
+    "start": "node node_modules/webpack-dev-server/bin/webpack-dev-server"
+  },
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-drag-and-drop-lists": "^1.4.0",
+    "angular-toastr": "^2.1.1",
+    "angular-ui-bootstrap": "^2.2.0",
+    "angular-ui-router": "^0.3.1",
+    "bootstrap": "^3.3.7",
+    "bootstrap-webpack": "0.0.5",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "font-awesome": "^4.6.3",
+    "html5-boilerplate": "0.0.1",
+    "jquery": "^3.1.1",
+    "ngmap": "^1.17.7",
+    "toastr": "^2.1.2"
+  }
+}
