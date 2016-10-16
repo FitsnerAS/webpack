@@ -44,37 +44,49 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var angular = __webpack_require__(1);
-	var jQuery = __webpack_require__(3);
+	'use strict';
+
+	var _angular = __webpack_require__(1);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	var _jquery = __webpack_require__(3);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
 	__webpack_require__(103);
+
 	__webpack_require__(104);
+
 	__webpack_require__(113);
+
 	__webpack_require__(115);
+
 	__webpack_require__(117);
+
 	__webpack_require__(118);
+
 	__webpack_require__(119);
+
 	__webpack_require__(120);
+
 	__webpack_require__(122);
+
 	__webpack_require__(123);
+
 	__webpack_require__(124);
+
 	__webpack_require__(126);
 
-	var myApp = angular.module('myApp', [
-	    'ui.router',
-	    'ui.bootstrap',
-	    'ngMap',
-	    'dndLists',
-	    'toastr'
-	]);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var myApp = _angular2.default.module('myApp', ['ui.router', 'ui.bootstrap', 'ngMap', 'dndLists', 'toastr']);
 
 	__webpack_require__(134)(myApp);
 	__webpack_require__(135)(myApp);
 	__webpack_require__(140)(myApp);
 	__webpack_require__(143)(myApp);
 	__webpack_require__(146)(myApp);
-
-
-
 
 /***/ },
 /* 1 */
@@ -62524,110 +62536,133 @@
 /* 134 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	module.exports = function (myApp) {
 	    myApp.config(function ($stateProvider, $urlRouterProvider) {
 	        $urlRouterProvider.otherwise('/app/shops');
-	        $stateProvider
-	                .state('app', {
-	                    abstract: true,
-	                    url: '/app',
-	                    templateUrl: 'angular-app/tmpl/app-body.html',
-	                    controller: 'AppBodyCtrl',
-	                    resolve: {
-	                        shopsResolve: function (shopsCatManagementFactory, $q) {
-	                            var defer = $q.defer();
-	                            shopsCatManagementFactory.getShops().success(function (data) {
-	                                defer.resolve(data);
-	                            }).error(function (data) {
-	                                console.log(data);
-	                                defer.reject();
-	                            });
-	                            return defer.promise;
-	                        },
-	                        goodsResolve: function (shopsCatManagementFactory, $q) {
-	                            var defer = $q.defer();
-	                            shopsCatManagementFactory.getGoods().success(function (data) {
-	                                defer.resolve(data.catalogCardsData);
-	                            }).error(function (data) {
-	                                console.log(data);
-	                                defer.reject();
-	                            });
-	                            return defer.promise;
-	                        }
-	                    }
-	                })
-	                .state('app.shops', {
-	                    url: '/shops',
-	                    templateUrl: 'angular-app/tmpl/shops.html',
-	                    controller: 'ShopsCtrl'
-	                })
-	                .state('app.shops.goods', {
-	                    url: '/{id}/goods',
-	                    templateUrl: 'angular-app/tmpl/goods.html',
-	                    controller: 'GoodsCtrl'
-	                })
-	                .state('app.contacts', {
-	                    url: '/contacts',
-	                    templateUrl: 'angular-app/tmpl/contacts.html',
-	                })
-	                .state('app.error', {
-	                    url: '/error',
-	                    templateUrl: 'angular-app/tmpl/error-page.html',
-	                })
-
-
+	        $stateProvider.state('app', {
+	            abstract: true,
+	            url: '/app',
+	            templateUrl: 'angular-app/tmpl/app-body.html',
+	            controller: 'AppBodyCtrl',
+	            resolve: {
+	                shopsResolve: function shopsResolve(shopsCatManagementFactory, $q) {
+	                    var defer = $q.defer();
+	                    shopsCatManagementFactory.getShops().success(function (data) {
+	                        defer.resolve(data);
+	                    }).error(function (data) {
+	                        console.log(data);
+	                        defer.reject();
+	                    });
+	                    return defer.promise;
+	                },
+	                goodsResolve: function goodsResolve(shopsCatManagementFactory, $q) {
+	                    var defer = $q.defer();
+	                    shopsCatManagementFactory.getGoods().success(function (data) {
+	                        defer.resolve(data.catalogCardsData);
+	                    }).error(function (data) {
+	                        console.log(data);
+	                        defer.reject();
+	                    });
+	                    return defer.promise;
+	                }
+	            }
+	        }).state('app.shops', {
+	            url: '/shops',
+	            templateUrl: 'angular-app/tmpl/shops.html',
+	            controller: 'ShopsCtrl'
+	        }).state('app.shops.goods', {
+	            url: '/{id}/goods',
+	            templateUrl: 'angular-app/tmpl/goods.html',
+	            controller: 'GoodsCtrl'
+	        }).state('app.contacts', {
+	            url: '/contacts',
+	            templateUrl: 'angular-app/tmpl/contacts.html'
+	        }).state('app.error', {
+	            url: '/error',
+	            templateUrl: 'angular-app/tmpl/error-page.html'
+	        });
 	    });
-	}
+	};
 
 /***/ },
 /* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(myApp){
+	'use strict';
+
+	module.exports = function (myApp) {
 	    __webpack_require__(136)(myApp);
 	    __webpack_require__(137)(myApp);
 	    __webpack_require__(138)(myApp);
 	    __webpack_require__(139)(myApp);
 	};
 
-
-
 /***/ },
 /* 136 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	module.exports = function (myApp) {
-	    myApp.controller('AppBodyCtrl', function ($localstorage, shopsResolve,
-	            goodsResolve, $rootScope, $state) {
+	    myApp.controller('AppBodyCtrl', function ($localstorage, shopsResolve, goodsResolve, $rootScope, $state, $http) {
 
 	        if ($localstorage.get('shops') === undefined) {
 	            $localstorage.set('shops', JSON.stringify(shopsResolve));
 	        }
 
 	        if ($localstorage.get('goods') === undefined) {
-	            $localstorage.set('goods', JSON.stringify(goodsResolve));
+
+	            //            fetch example
+	            fetch("assets/json/goods.json").then(function (data) {
+	                $localstorage.set('goods', JSON.stringify(data));
+	            }, function () {
+	                $state.go('app.error');
+	            });
+	            //            promise example
+	            //            var promise = new Promise(function (resolve, reject) {
+	            //
+	            //                $http({
+	            //                    method: 'GET',
+	            //                    url: "assets/json/goods.json"
+	            //                }).success(function (data) {
+	            //                    resolve(data);
+	            //                }).error(function () {
+	            //                    reject();
+	            //                });
+	            //            });
+	            //
+	            //            promise.then(
+	            //                    function (data) {
+	            //                        $localstorage.set('goods', JSON.stringify(data));
+	            //                    },
+	            //                    function () {
+	            //                        $state.go('app.error');
+	            //                    }
+	            //            );
 	        }
-	        
+
 	        $rootScope.$on('$stateChangeError', function () {
 	            $state.go('app.error');
 	        });
 	    });
 	};
 
-
 /***/ },
 /* 137 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	module.exports = function (myApp) {
-	    myApp.controller('GoodsCtrl', function ($scope, $uibModal,
-	            $stateParams, shopsCatManagementFactory) {
+	    myApp.controller('GoodsCtrl', function ($scope, $uibModal, $stateParams, shopsCatManagementFactory) {
 
 	        $scope.goods = [];
 	        $scope.postsPerPage = 5;
 
 	        $scope.goods = shopsCatManagementFactory.getShopGoods($stateParams.id);
-	        console.log($scope.goods)
+	        console.log($scope.goods);
 	        $scope.loadMore = function () {
 	            $scope.postsPerPage += 5;
 	        };
@@ -62639,7 +62674,6 @@
 	                size: 'lg',
 	                scope: $scope
 	            });
-
 	        };
 
 	        $scope.editModal = function (currentPost) {
@@ -62658,7 +62692,6 @@
 	            shopsCatManagementFactory.setUpdatedGood(post);
 
 	            $scope.openEditPostModal.dismiss();
-
 	        };
 
 	        $scope.addNewPost = function (post) {
@@ -62668,7 +62701,6 @@
 
 	            $scope.postsPerPage += 1;
 	            $scope.openAddPostModal.dismiss();
-
 	        };
 	    });
 	};
@@ -62677,13 +62709,14 @@
 /* 138 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	module.exports = function (myApp) {
-	    myApp.controller('NewShopCtrl', function (NgMap, $scope,
-	            shopsCatManagementFactory) {
+	    myApp.controller('NewShopCtrl', function (NgMap, $scope, shopsCatManagementFactory) {
 
 	        $scope.newShop = {};
 
-	        NgMap.getMap({id: 'we'}).then(function (map) {
+	        NgMap.getMap({ id: 'we' }).then(function (map) {
 	            console.log(map.getCenter());
 	            google.maps.event.trigger($scope.map, 'resize');
 	            console.log('markers', map.markers);
@@ -62699,7 +62732,7 @@
 	            $scope.lat = map.latLng.lat();
 	            $scope.long = map.latLng.lng();
 	            marker = new google.maps.Marker({
-	                position: {lat: $scope.lat, lng: $scope.long},
+	                position: { lat: $scope.lat, lng: $scope.long },
 	                map: $scope.map,
 	                title: $scope.newShop.link
 	            });
@@ -62735,14 +62768,14 @@
 	    });
 	};
 
-
 /***/ },
 /* 139 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	module.exports = function (myApp) {
-	    myApp.controller('ShopsCtrl', function ($scope, $uibModal, NgMap,
-	            $localstorage, toastr, $filter,shopsCatManagementFactory) {
+	    myApp.controller('ShopsCtrl', function ($scope, $uibModal, NgMap, $localstorage, toastr, $filter, shopsCatManagementFactory) {
 	        $scope.shops = [];
 	        $scope.pagination = {};
 	        $scope.pagination.itemPerPage = 5;
@@ -62784,24 +62817,22 @@
 	    });
 	};
 
-
-
-
 /***/ },
 /* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(myApp){
+	'use strict';
+
+	module.exports = function (myApp) {
 	    __webpack_require__(141)(myApp);
 	    __webpack_require__(142)(myApp);
 	};
 
-
-
-
 /***/ },
 /* 141 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = function (myApp) {
 	    myApp.directive('appHeader', function () {
@@ -62812,10 +62843,11 @@
 	    });
 	};
 
-
 /***/ },
 /* 142 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = function (myApp) {
 	    myApp.directive('appFooter', function () {
@@ -62826,49 +62858,48 @@
 	    });
 	};
 
-
-
 /***/ },
 /* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(myApp){
+	'use strict';
+
+	module.exports = function (myApp) {
 	    __webpack_require__(144)(myApp);
 	    __webpack_require__(145)(myApp);
 	};
-
-
-
 
 /***/ },
 /* 144 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	module.exports = function (myApp) {
 	    myApp.factory('shopsCatManagementFactory', function ($http, $localstorage, toastr) {
-	        return{
-	            getShops: function () {
+	        return {
+	            getShops: function getShops() {
 	                return $http({
 	                    method: 'GET',
 	                    url: "assets/json/shops.json"
 	                });
 	            },
-	            getStorageShops: function () {
+	            getStorageShops: function getStorageShops() {
 	                return JSON.parse($localstorage.get('shops'));
 	            },
-	            getGoods: function () {
+	            getGoods: function getGoods() {
 	                return $http({
 	                    method: 'GET',
 	                    url: "assets/json/goods.json"
 	                });
 	            },
-	            getShopGoods: function (shop_id) {
+	            getShopGoods: function getShopGoods(shop_id) {
 	                var allGoods = JSON.parse($localstorage.get('goods'));
 	                return allGoods.filter(function (object) {
 	                    return object.shop_id === shop_id;
 	                });
 	            },
-	            setUpdatedGood: function (good) {
+	            setUpdatedGood: function setUpdatedGood(good) {
 	                var allGoods = JSON.parse($localstorage.get('goods'));
 	                var newGoodsArr = allGoods.map(function (object) {
 	                    if (object.saleId === good.saleId) {
@@ -62878,12 +62909,11 @@
 	                    }
 	                });
 
-	                $localstorage.set('goods',
-	                        JSON.stringify($filter('removeHash')(newGoodsArr)));
+	                $localstorage.set('goods', JSON.stringify($filter('removeHash')(newGoodsArr)));
 
 	                toastr.success('Done!');
 	            },
-	            setNewGood: function (post, shop_id) {
+	            setNewGood: function setNewGood(post, shop_id) {
 
 	                post.shop_id = shop_id;
 
@@ -62894,9 +62924,8 @@
 	                $localstorage.set('goods', JSON.stringify(allGoods));
 
 	                toastr.success('Done!');
-
 	            },
-	            setNewShop: function (newShopParams) {
+	            setNewShop: function setNewShop(newShopParams) {
 	                var shops = JSON.parse($localstorage.get('shops'));
 	                var rand = 1 + Math.random() * (99999999 - 1);
 	                rand = Math.round(rand);
@@ -62908,9 +62937,8 @@
 	                $localstorage.set('shops', JSON.stringify(shops));
 	                toastr.success('Done!');
 	            },
-	            editShop: function (shops) {
-	                $localstorage.set('shops',
-	                        JSON.stringify($filter('removeHash')(shops)));
+	            editShop: function editShop(shops) {
+	                $localstorage.set('shops', JSON.stringify($filter('removeHash')(shops)));
 	                toastr.success('Done!');
 	            }
 	        };
@@ -62921,16 +62949,18 @@
 /* 145 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	module.exports = function (myApp) {
 	    myApp.factory('$localstorage', function ($window) {
 	        return {
-	            set: function (key, value) {
+	            set: function set(key, value) {
 	                $window.localStorage[key] = value;
 	            },
-	            get: function (key) {
+	            get: function get(key) {
 	                return $window.localStorage[key];
 	            },
-	            del: function (key) {
+	            del: function del(key) {
 	                $window.localStorage.removeItem(key);
 	            }
 	        };
@@ -62941,17 +62971,18 @@
 /* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(myApp){
+	'use strict';
+
+	module.exports = function (myApp) {
 	    __webpack_require__(147)(myApp);
 	    __webpack_require__(148)(myApp);
 	};
 
-
-
-
 /***/ },
 /* 147 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = function (myApp) {
 	    myApp.filter('removeHash', function () {
@@ -62968,6 +62999,8 @@
 /* 148 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	module.exports = function (myApp) {
 	    myApp.filter('startFrom', function () {
 	        return function (data, start) {
@@ -62975,7 +63008,6 @@
 	        };
 	    });
 	};
-
 
 /***/ }
 /******/ ]);

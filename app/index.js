@@ -1,17 +1,17 @@
-var angular = require('angular');
-var jQuery = require('jquery');
-require('bootstrap/dist/js/bootstrap.js');
-require('bootstrap/dist/css/bootstrap.min.css');
-require('html5-boilerplate/dist/css/normalize.css');
-require('html5-boilerplate/dist/css/main.css');
-require('./assets/css/app.css');
-require('./assets/css/shop-homepage.css');
-require('angular-drag-and-drop-lists');
-require('angular-ui-bootstrap');
-require('angular-ui-router');
-require('ngmap');
-require('angular-toastr');
-require('font-awesome/css/font-awesome.css');
+import angular from 'angular';
+import jQuery from 'jquery';
+import 'bootstrap/dist/js/bootstrap.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'html5-boilerplate/dist/css/normalize.css';
+import 'html5-boilerplate/dist/css/main.css';
+import './assets/css/app.css';
+import './assets/css/shop-homepage.css';
+import 'angular-drag-and-drop-lists';
+import 'angular-ui-bootstrap';
+import 'angular-ui-router';
+import 'ngmap';
+import 'angular-toastr';
+import 'font-awesome/css/font-awesome.css';
 
 var myApp = angular.module('myApp', [
     'ui.router',
