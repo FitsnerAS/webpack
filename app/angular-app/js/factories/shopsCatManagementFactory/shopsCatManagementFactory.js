@@ -1,6 +1,6 @@
 module.exports = function (myApp) {
     myApp.factory('shopsCatManagementFactory', function ($localstorage) {
-        return{
+        return{ 
             getShops: function () {
                 return fetch("./assets/json/shops.json");
             },
@@ -53,15 +53,6 @@ module.exports = function (myApp) {
             },
             editShop: function (shops) {
                 $localstorage.set('shops', shops);
-            },
-            storageJsonValidation: function () {
-                try {
-                    $localstorage.get('shops');
-                    $localstorage.get('goods');
-                    return false;
-                } catch (e) {
-                    return true;
-                }
             }
         }
         ;

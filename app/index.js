@@ -22,10 +22,10 @@ var myApp = angular.module('myApp', [
     'toastr'
 ]);
 
+require('./angular-app/js/factories/index.js')(myApp);
 require('./angular-app/js/config/app.js')(myApp);
 require('./angular-app/js/controllers/index.js')(myApp);
 require('./angular-app/js/directives/index.js')(myApp);
-require('./angular-app/js/factories/index.js')(myApp);
 require('./angular-app/js/filters/index.js')(myApp);
 
 

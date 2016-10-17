@@ -8,33 +8,42 @@ module.exports = function (myApp) {
                     templateUrl: 'angular-app/tmpl/app-body.html',
                     controller: 'AppBodyCtrl',
                     resolve: {
-                        shopsResolve: function (shopsCatManagementFactory) {
-                            var promise = new Promise(function (resolve, reject) {
+                        shopsResolve: function (shopsCatManagementFactory, $localstorage) {
+                            return new Promise(function (resolve, reject) {
+                                try {
+                                    $localstorage.get('shops');
+                                    resolve();
 
-                                shopsCatManagementFactory.getShops().then(function (data) {
-                                    data.json().then(function (jsonData) {
-                                        resolve(jsonData);
+                                } catch (e) {
+                                    shopsCatManagementFactory.getShops().then(function (data) {
+                                        return data.json();
+                                    }, function () {
+                                        reject();
+                                    }).then(function (jsonData) {
+                                        $localstorage.set('shops', jsonData);
+                                        resolve();
                                     });
-                                }, function () {
-                                    reject();
-                                });
+                                }
 
                             });
-                            return promise;
                         },
-                        goodsResolve: function (shopsCatManagementFactory) {
-                            var promise = new Promise(function (resolve, reject) {
+                        goodsResolve: function (shopsCatManagementFactory, $localstorage) {
+                            return new Promise(function (resolve, reject) {
 
-                                shopsCatManagementFactory.getGoods().then(function (data) {
-                                    data.json().then(function (jsonData) {
-                                        resolve(jsonData);
+                                try {
+                                    $localstorage.get('goods');
+                                    resolve();
+                                } catch (e) {
+                                    shopsCatManagementFactory.getShops().then(function (data) {
+                                        return data.json();
+                                    }, function () {
+                                        reject();
+                                    }).then(function (jsonData) {
+                                        $localstorage.set('goods', jsonData);
+                                        resolve();
                                     });
-                                }, function () {
-                                    reject();
-                                });
-
+                                }
                             });
-                            return promise;
                         }
                     }
                 })

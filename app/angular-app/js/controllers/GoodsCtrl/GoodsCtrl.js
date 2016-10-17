@@ -37,7 +37,7 @@ module.exports = function (myApp) {
             shopsCatManagementFactory.setUpdatedGood(post);
 
             $scope.openEditPostModal.dismiss();
-            
+
             toastr.success('Done!');
         };
 
@@ -48,7 +48,7 @@ module.exports = function (myApp) {
 
             $scope.postsPerPage += 1;
             $scope.openAddPostModal.dismiss();
-            
+
             toastr.success('Done!');
 
         };

@@ -1,5 +1,6 @@
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+var webpack = require('webpack');
+var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 module.exports = {
     context: __dirname + '/app',
     entry: './index.js',
@@ -19,12 +20,12 @@ module.exports = {
     },
     module: {
         loaders: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
+            {test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
+                loader: 'babel',
                 query: {
-                    presets: ['es2015']
+                    presets: ['es2015'],
+                    plugins: ['transform-runtime']
                 }
             },
             {
@@ -42,6 +43,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin("bundle.css")
+        new ExtractTextPlugin("bundle.css"),
+        new ngAnnotatePlugin({
+            add: true
+        }),
+        new webpack.optimize.UglifyJsPlugin()
     ]
 };
