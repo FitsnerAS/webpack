@@ -11,6 +11,7 @@ module.exports = function (myApp) {
                         shopsResolve: function (shopsCatManagementFactory, $localstorage) {
                             return new Promise(function (resolve, reject) {
                                 try {
+
                                     $localstorage.get('shops');
                                     resolve();
 
@@ -24,17 +25,17 @@ module.exports = function (myApp) {
                                         resolve();
                                     });
                                 }
-
                             });
                         },
                         goodsResolve: function (shopsCatManagementFactory, $localstorage) {
                             return new Promise(function (resolve, reject) {
-
                                 try {
+
                                     $localstorage.get('goods');
                                     resolve();
+
                                 } catch (e) {
-                                    shopsCatManagementFactory.getShops().then(function (data) {
+                                    shopsCatManagementFactory.getGoods().then(function (data) {
                                         return data.json();
                                     }, function () {
                                         reject();
