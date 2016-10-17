@@ -76,17 +76,19 @@
 
 	__webpack_require__(124);
 
-	__webpack_require__(126);
+	__webpack_require__(125);
+
+	__webpack_require__(127);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var myApp = _angular2.default.module('myApp', ['ui.router', 'ui.bootstrap', 'ngMap', 'dndLists', 'toastr']);
 
-	__webpack_require__(134)(myApp);
 	__webpack_require__(135)(myApp);
-	__webpack_require__(140)(myApp);
-	__webpack_require__(143)(myApp);
-	__webpack_require__(146)(myApp);
+	__webpack_require__(136)(myApp);
+	__webpack_require__(141)(myApp);
+	__webpack_require__(144)(myApp);
+	__webpack_require__(147)(myApp);
 
 /***/ },
 /* 1 */
@@ -61998,15 +62000,6 @@
 
 /***/ },
 /* 124 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(125);
-	module.exports = 'toastr';
-
-
-
-/***/ },
-/* 125 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -62520,20 +62513,27 @@
 	$templateCache.put("directives/toast/toast.html","<div class=\"{{toastClass}} {{toastType}}\" ng-click=\"tapToast()\">\n  <div ng-switch on=\"allowHtml\">\n    <div ng-switch-default ng-if=\"title\" class=\"{{titleClass}}\" aria-label=\"{{title}}\">{{title}}</div>\n    <div ng-switch-default class=\"{{messageClass}}\" aria-label=\"{{message}}\">{{message}}</div>\n    <div ng-switch-when=\"true\" ng-if=\"title\" class=\"{{titleClass}}\" ng-bind-html=\"title\"></div>\n    <div ng-switch-when=\"true\" class=\"{{messageClass}}\" ng-bind-html=\"message\"></div>\n  </div>\n  <progress-bar ng-if=\"progressBar\"></progress-bar>\n</div>\n");}]);
 
 /***/ },
-/* 126 */
+/* 125 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 127 */,
+/* 126 */,
+/* 127 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
 /* 128 */,
 /* 129 */,
 /* 130 */,
 /* 131 */,
 /* 132 */,
 /* 133 */,
-/* 134 */
+/* 134 */,
+/* 135 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -62547,25 +62547,31 @@
 	            templateUrl: 'angular-app/tmpl/app-body.html',
 	            controller: 'AppBodyCtrl',
 	            resolve: {
-	                shopsResolve: function shopsResolve(shopsCatManagementFactory, $q) {
-	                    var defer = $q.defer();
-	                    shopsCatManagementFactory.getShops().success(function (data) {
-	                        defer.resolve(data);
-	                    }).error(function (data) {
-	                        console.log(data);
-	                        defer.reject();
+	                shopsResolve: function shopsResolve(shopsCatManagementFactory) {
+	                    var promise = new Promise(function (resolve, reject) {
+
+	                        shopsCatManagementFactory.getShops().then(function (data) {
+	                            data.json().then(function (jsonData) {
+	                                resolve(jsonData);
+	                            });
+	                        }, function () {
+	                            reject();
+	                        });
 	                    });
-	                    return defer.promise;
+	                    return promise;
 	                },
-	                goodsResolve: function goodsResolve(shopsCatManagementFactory, $q) {
-	                    var defer = $q.defer();
-	                    shopsCatManagementFactory.getGoods().success(function (data) {
-	                        defer.resolve(data.catalogCardsData);
-	                    }).error(function (data) {
-	                        console.log(data);
-	                        defer.reject();
+	                goodsResolve: function goodsResolve(shopsCatManagementFactory) {
+	                    var promise = new Promise(function (resolve, reject) {
+
+	                        shopsCatManagementFactory.getGoods().then(function (data) {
+	                            data.json().then(function (jsonData) {
+	                                resolve(jsonData);
+	                            });
+	                        }, function () {
+	                            reject();
+	                        });
 	                    });
-	                    return defer.promise;
+	                    return promise;
 	                }
 	            }
 	        }).state('app.shops', {
@@ -62587,66 +62593,16 @@
 	};
 
 /***/ },
-/* 135 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (myApp) {
-	    __webpack_require__(136)(myApp);
 	    __webpack_require__(137)(myApp);
 	    __webpack_require__(138)(myApp);
 	    __webpack_require__(139)(myApp);
-	};
-
-/***/ },
-/* 136 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function (myApp) {
-	    myApp.controller('AppBodyCtrl', function ($localstorage, shopsResolve, goodsResolve, $rootScope, $state, $http) {
-
-	        if ($localstorage.get('shops') === undefined) {
-	            $localstorage.set('shops', JSON.stringify(shopsResolve));
-	        }
-
-	        if ($localstorage.get('goods') === undefined) {
-
-	            //            fetch example
-	            fetch("assets/json/goods.json").then(function (data) {
-	                $localstorage.set('goods', JSON.stringify(data));
-	            }, function () {
-	                $state.go('app.error');
-	            });
-	            //            promise example
-	            //            var promise = new Promise(function (resolve, reject) {
-	            //
-	            //                $http({
-	            //                    method: 'GET',
-	            //                    url: "assets/json/goods.json"
-	            //                }).success(function (data) {
-	            //                    resolve(data);
-	            //                }).error(function () {
-	            //                    reject();
-	            //                });
-	            //            });
-	            //
-	            //            promise.then(
-	            //                    function (data) {
-	            //                        $localstorage.set('goods', JSON.stringify(data));
-	            //                    },
-	            //                    function () {
-	            //                        $state.go('app.error');
-	            //                    }
-	            //            );
-	        }
-
-	        $rootScope.$on('$stateChangeError', function () {
-	            $state.go('app.error');
-	        });
-	    });
+	    __webpack_require__(140)(myApp);
 	};
 
 /***/ },
@@ -62656,13 +62612,36 @@
 	'use strict';
 
 	module.exports = function (myApp) {
-	    myApp.controller('GoodsCtrl', function ($scope, $uibModal, $stateParams, shopsCatManagementFactory) {
+	    myApp.controller('AppBodyCtrl', function ($localstorage, shopsResolve, goodsResolve, $rootScope, $state, shopsCatManagementFactory) {
+
+	        if (shopsCatManagementFactory.storageJsonValidation()) {
+
+	            $localstorage.set('shops', shopsResolve);
+
+	            $localstorage.set('goods', goodsResolve);
+	        }
+
+	        $rootScope.$on('$stateChangeError', function () {
+
+	            $state.go('app.error');
+	        });
+	    });
+	};
+
+/***/ },
+/* 138 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function (myApp) {
+	    myApp.controller('GoodsCtrl', function ($scope, $uibModal, $stateParams, shopsCatManagementFactory, toastr) {
 
 	        $scope.goods = [];
 	        $scope.postsPerPage = 5;
 
 	        $scope.goods = shopsCatManagementFactory.getShopGoods($stateParams.id);
-	        console.log($scope.goods);
+
 	        $scope.loadMore = function () {
 	            $scope.postsPerPage += 5;
 	        };
@@ -62692,6 +62671,8 @@
 	            shopsCatManagementFactory.setUpdatedGood(post);
 
 	            $scope.openEditPostModal.dismiss();
+
+	            toastr.success('Done!');
 	        };
 
 	        $scope.addNewPost = function (post) {
@@ -62701,18 +62682,20 @@
 
 	            $scope.postsPerPage += 1;
 	            $scope.openAddPostModal.dismiss();
+
+	            toastr.success('Done!');
 	        };
 	    });
 	};
 
 /***/ },
-/* 138 */
+/* 139 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	module.exports = function (myApp) {
-	    myApp.controller('NewShopCtrl', function (NgMap, $scope, shopsCatManagementFactory) {
+	    myApp.controller('NewShopCtrl', function (NgMap, $scope, shopsCatManagementFactory, toastr) {
 
 	        $scope.newShop = {};
 
@@ -62757,6 +62740,8 @@
 	            }
 
 	            $scope.pagination.totalItems = $scope.shops.length;
+
+	            toastr.success('Done!');
 	        };
 
 	        $scope.dismiss = function () {
@@ -62769,13 +62754,13 @@
 	};
 
 /***/ },
-/* 139 */
+/* 140 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	module.exports = function (myApp) {
-	    myApp.controller('ShopsCtrl', function ($scope, $uibModal, NgMap, $localstorage, toastr, $filter, shopsCatManagementFactory) {
+	    myApp.controller('ShopsCtrl', function ($scope, $uibModal, NgMap, shopsCatManagementFactory, toastr) {
 	        $scope.shops = [];
 	        $scope.pagination = {};
 	        $scope.pagination.itemPerPage = 5;
@@ -62804,6 +62789,7 @@
 	        $scope.editCurrentShop = function () {
 	            shopsCatManagementFactory.editShop($scope.shops);
 	            $scope.openEditShopModal.dismiss();
+	            toastr.success('Done!');
 	        };
 
 	        $scope.addShop = function () {
@@ -62818,18 +62804,18 @@
 	};
 
 /***/ },
-/* 140 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (myApp) {
-	    __webpack_require__(141)(myApp);
 	    __webpack_require__(142)(myApp);
+	    __webpack_require__(143)(myApp);
 	};
 
 /***/ },
-/* 141 */
+/* 142 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -62844,7 +62830,7 @@
 	};
 
 /***/ },
-/* 142 */
+/* 143 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -62859,90 +62845,14 @@
 	};
 
 /***/ },
-/* 143 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (myApp) {
-	    __webpack_require__(144)(myApp);
 	    __webpack_require__(145)(myApp);
-	};
-
-/***/ },
-/* 144 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = function (myApp) {
-	    myApp.factory('shopsCatManagementFactory', function ($http, $localstorage, toastr) {
-	        return {
-	            getShops: function getShops() {
-	                return $http({
-	                    method: 'GET',
-	                    url: "assets/json/shops.json"
-	                });
-	            },
-	            getStorageShops: function getStorageShops() {
-	                return JSON.parse($localstorage.get('shops'));
-	            },
-	            getGoods: function getGoods() {
-	                return $http({
-	                    method: 'GET',
-	                    url: "assets/json/goods.json"
-	                });
-	            },
-	            getShopGoods: function getShopGoods(shop_id) {
-	                var allGoods = JSON.parse($localstorage.get('goods'));
-	                return allGoods.filter(function (object) {
-	                    return object.shop_id === shop_id;
-	                });
-	            },
-	            setUpdatedGood: function setUpdatedGood(good) {
-	                var allGoods = JSON.parse($localstorage.get('goods'));
-	                var newGoodsArr = allGoods.map(function (object) {
-	                    if (object.saleId === good.saleId) {
-	                        return good;
-	                    } else {
-	                        return object;
-	                    }
-	                });
-
-	                $localstorage.set('goods', JSON.stringify($filter('removeHash')(newGoodsArr)));
-
-	                toastr.success('Done!');
-	            },
-	            setNewGood: function setNewGood(post, shop_id) {
-
-	                post.shop_id = shop_id;
-
-	                var allGoods = JSON.parse($localstorage.get('goods'));
-
-	                allGoods.push(post);
-
-	                $localstorage.set('goods', JSON.stringify(allGoods));
-
-	                toastr.success('Done!');
-	            },
-	            setNewShop: function setNewShop(newShopParams) {
-	                var shops = JSON.parse($localstorage.get('shops'));
-	                var rand = 1 + Math.random() * (99999999 - 1);
-	                rand = Math.round(rand);
-	                var newShopData = newShopParams.shop;
-	                newShopData.id = rand;
-	                newShopData.lat = newShopParams.lat;
-	                newShopData.long = newShopParams.long;
-	                shops.push(newShopData);
-	                $localstorage.set('shops', JSON.stringify(shops));
-	                toastr.success('Done!');
-	            },
-	            editShop: function editShop(shops) {
-	                $localstorage.set('shops', JSON.stringify($filter('removeHash')(shops)));
-	                toastr.success('Done!');
-	            }
-	        };
-	    });
+	    __webpack_require__(146)(myApp);
 	};
 
 /***/ },
@@ -62952,13 +62862,87 @@
 	'use strict';
 
 	module.exports = function (myApp) {
-	    myApp.factory('$localstorage', function ($window) {
+	    myApp.factory('shopsCatManagementFactory', function ($localstorage) {
+	        return {
+	            getShops: function getShops() {
+	                return fetch("./assets/json/shops.json");
+	            },
+	            getStorageShops: function getStorageShops() {
+	                return $localstorage.get('shops');
+	            },
+	            getGoods: function getGoods() {
+	                return fetch("./assets/json/goods.json");
+	            },
+	            getShopGoods: function getShopGoods(shop_id) {
+	                var allGoods = $localstorage.get('goods');
+	                return allGoods.filter(function (object) {
+	                    return object.shop_id === shop_id;
+	                });
+	            },
+	            setUpdatedGood: function setUpdatedGood(good) {
+	                var allGoods = $localstorage.get('goods');
+	                var newGoodsArr = allGoods.map(function (object) {
+	                    if (object.saleId === good.saleId) {
+	                        return good;
+	                    } else {
+	                        return object;
+	                    }
+	                });
+
+	                $localstorage.set('goods', newGoodsArr);
+	            },
+	            setNewGood: function setNewGood(post, shop_id) {
+
+	                post.shop_id = shop_id;
+
+	                var allGoods = $localstorage.get('goods');
+
+	                allGoods.push(post);
+
+	                $localstorage.set('goods', allGoods);
+	            },
+	            setNewShop: function setNewShop(newShopParams) {
+
+	                var shops = $localstorage.get('shops');
+	                var rand = 1 + Math.random() * (99999999 - 1);
+	                rand = Math.round(rand);
+	                var newShopData = newShopParams.shop;
+	                newShopData.id = rand;
+	                newShopData.lat = newShopParams.lat;
+	                newShopData.long = newShopParams.long;
+	                shops.unshift(newShopData);
+	                $localstorage.set('shops', shops);
+	            },
+	            editShop: function editShop(shops) {
+	                $localstorage.set('shops', shops);
+	            },
+	            storageJsonValidation: function storageJsonValidation() {
+	                try {
+	                    $localstorage.get('shops');
+	                    $localstorage.get('goods');
+	                    return false;
+	                } catch (e) {
+	                    return true;
+	                }
+	            }
+	        };
+	    });
+	};
+
+/***/ },
+/* 146 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function (myApp) {
+	    myApp.factory('$localstorage', function ($window, $filter) {
 	        return {
 	            set: function set(key, value) {
-	                $window.localStorage[key] = value;
+	                $window.localStorage[key] = JSON.stringify($filter('removeHash')(value));
 	            },
 	            get: function get(key) {
-	                return $window.localStorage[key];
+	                return JSON.parse($window.localStorage[key]);
 	            },
 	            del: function del(key) {
 	                $window.localStorage.removeItem(key);
@@ -62968,18 +62952,18 @@
 	};
 
 /***/ },
-/* 146 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (myApp) {
-	    __webpack_require__(147)(myApp);
 	    __webpack_require__(148)(myApp);
+	    __webpack_require__(149)(myApp);
 	};
 
 /***/ },
-/* 147 */
+/* 148 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -62996,7 +62980,7 @@
 	};
 
 /***/ },
-/* 148 */
+/* 149 */
 /***/ function(module, exports) {
 
 	'use strict';

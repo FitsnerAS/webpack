@@ -1,12 +1,12 @@
 module.exports = function (myApp) {
     myApp.controller('GoodsCtrl', function ($scope, $uibModal,
-            $stateParams, shopsCatManagementFactory) {
+            $stateParams, shopsCatManagementFactory, toastr) {
 
         $scope.goods = [];
         $scope.postsPerPage = 5;
 
         $scope.goods = shopsCatManagementFactory.getShopGoods($stateParams.id);
-        console.log($scope.goods)
+
         $scope.loadMore = function () {
             $scope.postsPerPage += 5;
         };
@@ -37,7 +37,8 @@ module.exports = function (myApp) {
             shopsCatManagementFactory.setUpdatedGood(post);
 
             $scope.openEditPostModal.dismiss();
-
+            
+            toastr.success('Done!');
         };
 
         $scope.addNewPost = function (post) {
@@ -47,6 +48,8 @@ module.exports = function (myApp) {
 
             $scope.postsPerPage += 1;
             $scope.openAddPostModal.dismiss();
+            
+            toastr.success('Done!');
 
         };
     });

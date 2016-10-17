@@ -10,7 +10,8 @@ import 'angular-drag-and-drop-lists';
 import 'angular-ui-bootstrap';
 import 'angular-ui-router';
 import 'ngmap';
-import 'angular-toastr';
+import 'angular-toastr/dist/angular-toastr.tpls.js';
+import 'angular-toastr/dist/angular-toastr.css';
 import 'font-awesome/css/font-awesome.css';
 
 var myApp = angular.module('myApp', [

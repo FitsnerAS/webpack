@@ -22,15 +22,20 @@
                     </i>
                     <p class="text-info ">{{shop.link}}</p>
                 </a>
-                <button class="btn btn-block btn-danger"
-                        ng-click="addShop()">
-                    Add shop
-                </button>
-                <ul uib-pagination total-items="pagination.totalItems"
-                    ng-model="pagination.currentPage"
-                    class="pagination-sm" boundary-link-numbers="true">
-                </ul>
+
             </div>
+            <button class="btn btn-block btn-danger "
+                    ng-click="addShop()">
+                Add shop
+            </button>
+            <ul uib-pagination total-items="pagination.totalItems"
+                boundary-links="true"
+                max-size="3"
+                previous-text="&lsaquo;" next-text="&rsaquo;"
+                first-text="&laquo;" last-text="&raquo;"
+                ng-model="pagination.currentPage"
+                class="pagination-sm" boundary-link-numbers="true">
+            </ul>
         </div>
         <div class="col-md-9">
             <div class="row carousel-holder">

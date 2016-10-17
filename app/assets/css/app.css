@@ -1,27 +1,27 @@
 /* app css stylesheet */
 
-a:focus{
+a:focus {
     outline: none;
 }
 
-*{
+* {
     outline: none;
 }
 
-.position{
+.position {
     margin-top:20px;
 }
 
-.edit{
+.edit {
     color:black;
     margin-right: 10px;
     cursor:pointer;
 }
 
-.pull-left{
+.pull-left {
     margin-right: 10px;
 }
 
-.indents-form{
+.indents-form {
     padding: 20px;
 }

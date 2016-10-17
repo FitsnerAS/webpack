@@ -1,6 +1,6 @@
 module.exports = function (myApp) {
     myApp.controller('NewShopCtrl', function (NgMap, $scope,
-            shopsCatManagementFactory) {
+            shopsCatManagementFactory, toastr) {
 
         $scope.newShop = {};
 
@@ -45,6 +45,8 @@ module.exports = function (myApp) {
             }
 
             $scope.pagination.totalItems = $scope.shops.length;
+            
+            toastr.success('Done!');
         };
 
         $scope.dismiss = function () {

@@ -8,25 +8,33 @@ module.exports = function (myApp) {
                     templateUrl: 'angular-app/tmpl/app-body.html',
                     controller: 'AppBodyCtrl',
                     resolve: {
-                        shopsResolve: function (shopsCatManagementFactory, $q) {
-                            var defer = $q.defer();
-                            shopsCatManagementFactory.getShops().success(function (data) {
-                                defer.resolve(data);
-                            }).error(function (data) {
-                                console.log(data);
-                                defer.reject();
+                        shopsResolve: function (shopsCatManagementFactory) {
+                            var promise = new Promise(function (resolve, reject) {
+
+                                shopsCatManagementFactory.getShops().then(function (data) {
+                                    data.json().then(function (jsonData) {
+                                        resolve(jsonData);
+                                    });
+                                }, function () {
+                                    reject();
+                                });
+
                             });
-                            return defer.promise;
+                            return promise;
                         },
-                        goodsResolve: function (shopsCatManagementFactory, $q) {
-                            var defer = $q.defer();
-                            shopsCatManagementFactory.getGoods().success(function (data) {
-                                defer.resolve(data.catalogCardsData);
-                            }).error(function (data) {
-                                console.log(data);
-                                defer.reject();
+                        goodsResolve: function (shopsCatManagementFactory) {
+                            var promise = new Promise(function (resolve, reject) {
+
+                                shopsCatManagementFactory.getGoods().then(function (data) {
+                                    data.json().then(function (jsonData) {
+                                        resolve(jsonData);
+                                    });
+                                }, function () {
+                                    reject();
+                                });
+
                             });
-                            return defer.promise;
+                            return promise;
                         }
                     }
                 })
@@ -42,13 +50,11 @@ module.exports = function (myApp) {
                 })
                 .state('app.contacts', {
                     url: '/contacts',
-                    templateUrl: 'angular-app/tmpl/contacts.html',
+                    templateUrl: 'angular-app/tmpl/contacts.html'
                 })
                 .state('app.error', {
                     url: '/error',
-                    templateUrl: 'angular-app/tmpl/error-page.html',
-                })
-
-
+                    templateUrl: 'angular-app/tmpl/error-page.html'
+                });
     });
-}
+};

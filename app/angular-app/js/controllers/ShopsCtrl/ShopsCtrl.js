@@ -1,6 +1,6 @@
 module.exports = function (myApp) {
     myApp.controller('ShopsCtrl', function ($scope, $uibModal, NgMap,
-            $localstorage, toastr, $filter,shopsCatManagementFactory) {
+            shopsCatManagementFactory, toastr) {
         $scope.shops = [];
         $scope.pagination = {};
         $scope.pagination.itemPerPage = 5;
@@ -29,6 +29,7 @@ module.exports = function (myApp) {
         $scope.editCurrentShop = function () {
             shopsCatManagementFactory.editShop($scope.shops);
             $scope.openEditShopModal.dismiss();
+            toastr.success('Done!');
         };
 
         $scope.addShop = function () {
